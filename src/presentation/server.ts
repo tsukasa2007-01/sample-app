@@ -48,4 +48,3 @@ app.delete("/api/todos/:id", (req, res) => {
 app.listen(PORT, () => {
   console.log(`サーバー起動: http://localhost:${PORT}`);
 });
-

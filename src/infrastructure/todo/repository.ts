@@ -48,8 +48,7 @@ export function insertTodo(title: string): TodoRow {
 
 export function findTodoById(id: number): TodoRow | undefined {
   const row = db.prepare("SELECT * FROM todos WHERE id = ?").get(id) as
-    | SqliteTodoRow
-    | undefined;
+    SqliteTodoRow | undefined;
 
   if (!row) {
     return undefined;
@@ -63,7 +62,9 @@ export function updateTodoDone(id: number, done: boolean): TodoRow | undefined {
     doneForSqlite = 1;
   }
 
-  const result = db.prepare("UPDATE todos SET done = ? WHERE id = ?").run(doneForSqlite, id);
+  const result = db
+    .prepare("UPDATE todos SET done = ? WHERE id = ?")
+    .run(doneForSqlite, id);
   if (result.changes === 0) {
     return undefined;
   }
@@ -74,4 +75,3 @@ export function deleteTodoById(id: number): boolean {
   const result = db.prepare("DELETE FROM todos WHERE id = ?").run(id);
   return result.changes > 0;
 }
-
