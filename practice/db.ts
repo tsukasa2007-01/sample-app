@@ -21,7 +21,11 @@ type TodoRow = {
 };
 
 // DB の1行（done は 0 | 1）を、TodoRow型に変換する関数
-function todoRowFromSqliteRow(row: { id: number; title: string; done: number }): TodoRow {
+function todoRowFromSqliteRow(row: {
+  id: number;
+  title: string;
+  done: number;
+}): TodoRow {
   return {
     id: row.id,
     title: row.title,
@@ -39,7 +43,7 @@ function addTodo(title: string): void {
 // --- TODO 一覧を取得する ---
 function getAllTodos(): TodoRow[] {
   const stmt = db.prepare("SELECT * FROM todos");
-  const rows = stmt.all() as Array<{ id: number; title: string; done: number }>;//asは型アサーションで、stmt.all()の戻り値をArray<{ id: number; title: string; done: number }>として扱うことを示している
+  const rows = stmt.all() as Array<{ id: number; title: string; done: number }>; //asは型アサーションで、stmt.all()の戻り値をArray<{ id: number; title: string; done: number }>として扱うことを示している
   const todos: TodoRow[] = [];
   for (const row of rows) {
     todos.push(todoRowFromSqliteRow(row));
@@ -77,4 +81,3 @@ showTodos();
 
 // --- データベースを閉じる ---
 db.close();
-
