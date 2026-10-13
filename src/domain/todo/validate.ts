@@ -11,3 +11,16 @@ export function isValidTitle(title: string): boolean {
   return true;
 }
 // exportをつけると、このファイルを他のファイルからimportできるようになる
+export function validateTitle(rawTitle: unknown): string{
+  if (typeof rawTitle !== "string"){
+    throw new Error("タイトルは必須です");
+  }
+  const trimmed = rawTitle.trim();
+  if(trimmed.length===0){
+    throw new Error("タイトルは必須です");
+  }
+  if (trimmed.length > 100){
+    throw new Error("タイトルは100文字いないにしてください");
+  }
+  return trimmed;
+}
